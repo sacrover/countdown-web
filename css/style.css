@@ -10,12 +10,12 @@ body {
 }
 
 :root {
-  --flip-height: 10vw;
+  --flip-height: 14vw;
   --flip-width: calc(var(--flip-height) * 0.75);
   --line-height: calc(var(--flip-height) * 0.5);
-  --flip-container-color: #353531;
-  --flip-color: #353531;
-  --flip-text-color: #efefef;
+  --flip-container-color: #4b4a4b;  
+  --flip-color: #4b4a4b;
+  --flip-text-color: #ffffff;
   --flip-border-radius: calc(var(--flip-height) * 0.05);
   --animation-time: 0.8s;
   --animation-ease: linear;
@@ -24,6 +24,8 @@ body {
 
 h3 {
   font-family: sans-serif;
+  margin-block-start: 0;
+  font-weight: lighter;
 }
 
 body {
@@ -40,7 +42,7 @@ body {
   font-size: calc(var(--flip-height) * 0.5);
   font-weight: 700;
   position: relative;
-  margin: 0.5vw;
+  margin: 0.25vw;
 }
 .flip .flip-display {
   height: var(--flip-height);

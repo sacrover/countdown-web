@@ -71,6 +71,29 @@ $(document).ready(function () {
       // flipDigit(hoursLast, time.hours.lastDigit);
       // flipDigit(hoursFirst, time.hours.firstDigit);
     }, 1000);
+
+    const time = generateTimeInfo();
+    if (time.minutes.firstDigit == 0 && time.minutes.lastDigit  == 1 ){
+      document.querySelector(".minuteText").innerText = "Minute";
+    }
+    else {
+      document.querySelector(".minuteText").innerText = "Minutes";
+    }
+    
+    if (time.hours.firstDigit == 0 && time.hours.lastDigit  == 1 ){
+      document.querySelector(".hourText").innerText = "Hour";
+    }
+    else {
+      document.querySelector(".hourText").innerText = "Hours";
+    }
+    
+    if (time.days.firstDigit == 0 && time.days.lastDigit  == 1 ){
+      document.querySelector(".dayText").innerText = "Day";
+    }
+    else {
+      document.querySelector(".dayText").innerText = "Days";
+    }
+    
   });
 
   function setInitialValues(flipElement, initialValue) {
@@ -138,5 +161,28 @@ $(document).ready(function () {
       setPreviousValue(flipHiddenInput.val());
       flipElement.removeClass("play");
     });
+
+    const time = generateTimeInfo();
+    if (time.minutes.firstDigit == 0 && time.minutes.lastDigit  == 1 ){
+      document.querySelector(".minuteText").innerText = "Minute";
+    }
+    else {
+      document.querySelector(".minuteText").innerText = "Minutes";
+    }
+    
+    if (time.hours.firstDigit == 0 && time.hours.lastDigit  == 1 ){
+      document.querySelector(".hourText").innerText = "Hour";
+    }
+    else {
+      document.querySelector(".hourText").innerText = "Hours";
+    }
+    
+    if (time.days.firstDigit == 0 && time.days.lastDigit  == 1 ){
+      document.querySelector(".dayText").innerText = "Day";
+    }
+    else {
+      document.querySelector(".dayText").innerText = "Days";
+    }
+    
   }
 });
