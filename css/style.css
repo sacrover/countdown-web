@@ -1,15 +1,57 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
 html,
 body {
+  --flip-height: 14vw;
+  --flip-width: calc(var(--flip-height) * 0.75);
+  --line-height: calc(var(--flip-height) * 0.5);
+  --flip-container-color: #e6e6e6;  
+  --flip-color: var(--flip-container-color);
+  --flip-text-color: #252525;
+  --flip-border-radius: calc(var(--flip-height) * 0.05);
+  --animation-time: 0.8s;
+  --animation-ease: linear;
+  --perspective: 40vw;
+  --bg-color: #ffffff;
+  --text-color: #161616;
+  --typewriterSpeed: 3s;
+  background-color: var(--bg-color);
+
+  margin: 0;
   height: 100%;
+  width: 100%;
+  font-family: "Anton", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  transition: all 0.2s linear;
+  
+}
+
+body.dark {
+  --flip-container-color: #1c1c1c;  
+  --flip-color: var(--flip-container-color);
+  --flip-text-color: #ffffff;
+  --flip-border-radius: calc(var(--flip-height) * 0.05);
+  --animation-time: 0.8s;
+  --animation-ease: linear;
+  --perspective: 40vw;
+  --bg-color: #464646;
+  --text-color: #e3e3e3;
+  --typewriterSpeed: 3s;
+  background-color: var(--bg-color);
+
 }
 
 * {
   box-sizing: border-box;
 }
 
-:root {
+/* :root {
   --flip-height: 14vw;
   --flip-width: calc(var(--flip-height) * 0.75);
   --line-height: calc(var(--flip-height) * 0.5);
@@ -20,15 +62,78 @@ body {
   --animation-time: 0.8s;
   --animation-ease: linear;
   --perspective: 40vw;
-}
+  --bg-color: hsl(0, 0%, 100%);
+  --typewriterSpeed: 3s;
+} */
 
 h3 {
-  font-family: sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   margin-block-start: 0;
   font-weight: lighter;
+  padding-bottom: 10vh;
+  color: var(--text-color);
 }
 
-body {
+h2 {
+  position: relative;
+  padding-top: 0;
+  font-family: "Source Code Pro", sans-serif;
+  margin-block-start: 0;
+  font-size: 5vw;
+  color: #000000;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--text-color);
+}
+
+h2::before,
+h2::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -1px;
+
+}
+
+h2::before {
+  background: var(--bg-color);
+  animation: 
+  typewriter var(--typewriterSpeed) steps(12) 1s forwards;
+}
+
+h2::after {
+  width: 0.125em;
+  background: var(--text-color);
+  animation: 
+    typewriter var(--typewriterSpeed) steps(12) 1s forwards,
+    blink 650ms steps(2) infinite;
+}
+
+@keyframes backspace{
+  from {
+    left: 100%;
+  }
+  to {left: 0%;
+  }
+}
+
+@keyframes typewriter{
+  to {left: 100%;
+  }
+}
+
+@keyframes blink {
+  to {
+    background: transparent;
+  }
+
+}
+
+/* Flip clock animation */
+
+.flip-clock {
   font-family: "Anton", sans-serif;
   display: flex;
   justify-content: center;
@@ -96,6 +201,7 @@ body {
   background-color: var(--flip-color);
   overflow: hidden;
   color: var(--flip-text-color);
+  box-shadow: 0px px 3px rgba(0,0,0,0.2);
 }
 .flip .flipper .flipper-top {
   --i: 2;
@@ -191,4 +297,51 @@ body {
 .flip-clock .days-container {
   font-size: 3vw;
   text-align: center;
+}
+
+/* Theme Toggle */
+label {
+  width:50px;
+  height:23px;
+  position: absolute;
+  align-content: center;
+  bottom: 10%;
+  display: block;
+  background: #ebebeb;
+  border-radius: 20px;
+  box-shadow: inset 0px 2px 5px rgba(0,0,0,0.4), inset 0px -5px 15px rgba(255,255,255,0.4);
+  cursor: pointer;
+}
+
+label:after {
+  content: "";
+  width:19px;
+  height: 19px;
+  position: absolute;
+  top:2px;
+  left:2px;
+  background: linear-gradient(180deg,#ffcc89,#d8860b);
+  border-radius: 18px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+input {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+input:checked + label {
+  background: #242424;
+}
+input:checked + label:after {
+  left:48px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg,#9b9a9a,#565656);
+}
+label, label:after {
+  transition: 0.3s
+}
+
+label:active:after{ 
+  width: 20px; 
 }

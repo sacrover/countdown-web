@@ -1,6 +1,12 @@
+const checkbox = document.getElementById("darkmode-toggle");
+checkbox.addEventListener('change', () => {
+  // change theme here   
+  document.body.classList.toggle("dark")
+});
+
 function generateTimeInfo() {
 
-  const countDate = new Date("May 31, 2023 10:00:00").getTime();
+  const countDate = new Date("May 31, 2023 16:00:00").getTime();
   const now = new Date().getTime();
 
   //calculate remaining time
@@ -22,6 +28,7 @@ function generateTimeInfo() {
   // const min = dateObj.getMinutes();
   // const sec = dateObj.getSeconds();
   return {
+    remianingTime,
     days: {
       firstDigit: parseInt(textDay / 10),
       lastDigit: parseInt(textDay % 10),
@@ -62,16 +69,6 @@ $(document).ready(function () {
     setInitialValues(daysFirst, intialTime.days.firstDigit);
     setInitialValues(daysLast, intialTime.days.lastDigit);
 
-    setInterval(() => {
-      const time = generateTimeInfo();
-      flipDigit(secondsLast, time.seconds.lastDigit);
-      flipDigit(secondsFirst, time.seconds.firstDigit);
-      flipDigit(minutesLast, time.minutes.lastDigit);
-      flipDigit(minutesFirst, time.minutes.firstDigit);
-      // flipDigit(hoursLast, time.hours.lastDigit);
-      // flipDigit(hoursFirst, time.hours.firstDigit);
-    }, 1000);
-
     const time = generateTimeInfo();
     if (time.minutes.firstDigit == 0 && time.minutes.lastDigit  == 1 ){
       document.querySelector(".minuteText").innerText = "Minute";
@@ -93,7 +90,27 @@ $(document).ready(function () {
     else {
       document.querySelector(".dayText").innerText = "Days";
     }
-    
+
+    setInterval(() => {
+      const time = generateTimeInfo();
+      if (time.remianingTime > 0){
+        flipDigit(secondsLast, time.seconds.lastDigit);
+        flipDigit(secondsFirst, time.seconds.firstDigit);
+        flipDigit(minutesLast, time.minutes.lastDigit);
+        flipDigit(minutesFirst, time.minutes.firstDigit);
+        flipDigit(hoursLast, time.hours.lastDigit);
+        flipDigit(hoursFirst, time.hours.firstDigit);
+      }
+      else{
+        setInitialValues(minutesFirst, "0");
+        setInitialValues(minutesLast, "0");
+        setInitialValues(secondsFirst, "0");
+        setInitialValues(secondsLast, "0");
+        setInitialValues(hoursFirst, "0");
+        setInitialValues(hoursLast, "0");
+        setInitialValues(daysFirst, "0");
+        setInitialValues(daysLast, "0");
+      }}, 1000); 
   });
 
   function setInitialValues(flipElement, initialValue) {
