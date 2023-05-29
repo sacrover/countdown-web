@@ -10,8 +10,8 @@ body {
 }
 
 :root {
-  --flip-height: 100px;
-  --flip-width: calc(var(--flip-height) * 0.6);
+  --flip-height: 10vw;
+  --flip-width: calc(var(--flip-height) * 0.75);
   --line-height: calc(var(--flip-height) * 0.5);
   --flip-container-color: #353531;
   --flip-color: #353531;
@@ -19,7 +19,7 @@ body {
   --flip-border-radius: calc(var(--flip-height) * 0.05);
   --animation-time: 0.8s;
   --animation-ease: linear;
-  --perspective: 200px;
+  --perspective: 40vw;
 }
 
 h3 {
@@ -40,7 +40,7 @@ body {
   font-size: calc(var(--flip-height) * 0.5);
   font-weight: 700;
   position: relative;
-  margin: 0.25rem;
+  margin: 0.5vw;
 }
 .flip .flip-display {
   height: var(--flip-height);
@@ -168,7 +168,7 @@ body {
 }
 
 .flip-clock {
-  border-radius: 0.5rem;
+  border-radius: 1vw;
   position: relative;
   display: flex;
   flex-shrink: 0;
@@ -180,12 +180,13 @@ body {
 .flip-clock .days-container .days {
   z-index: 1;
   display: inline-flex;
-  margin: 0.5rem;
+  margin: 1vw;;
 }
 
 .flip-clock .seconds-container,
 .flip-clock .minutes-container,
 .flip-clock .hours-container,
 .flip-clock .days-container {
+  font-size: 3vw;
   text-align: center;
 }
