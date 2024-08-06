@@ -78,7 +78,6 @@ $(document).ready(function () {
     setInitialValues(hoursLast, intialTime.hours.lastDigit);
     setInitialValues(daysFirst, intialTime.days.firstDigit);
     setInitialValues(daysLast, intialTime.days.lastDigit);
-    document.querySelector(".status-text").innerText = time.remainingTime > 0 ? "We're moving" : "We've moved.";
 
     const time = generateTimeInfo();
     if (time.minutes.firstDigit == 0 && time.minutes.lastDigit  == 1 ){
@@ -104,6 +103,7 @@ $(document).ready(function () {
 
     setInterval(() => {
       const time = generateTimeInfo();
+      document.querySelector(".status-text").innerText = time.remainingTime > 0 ? "We're moving" : "We've moved.";
       if (time.remianingTime > 0){
         flipDigit(secondsLast, time.seconds.lastDigit);
         flipDigit(secondsFirst, time.seconds.firstDigit);
