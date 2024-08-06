@@ -12,6 +12,17 @@ function generateTimeInfo() {
   //calculate remaining time
   const remianingTime = countDate - now;
 
+  // Check if remaining time is negative
+  if (remianingTime < 0) {
+    return {
+      remianingTime: 0,
+      days: { firstDigit: 0, lastDigit: 0 },
+      hours: { firstDigit: 0, lastDigit: 0 },
+      minutes: { firstDigit: 0, lastDigit: 0 },
+      seconds: { firstDigit: 0, lastDigit: 0 }
+    };
+  
+
   // workout the time in Days, hrs, min, sec
   const second = 1000;
   const minute = second * 60;
