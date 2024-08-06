@@ -1,17 +1,17 @@
 const checkbox = document.getElementById("darkmode-toggle");
 checkbox.addEventListener('change', () => {
-  // Change theme here   
+  // change theme here   
   document.body.classList.toggle("dark")
 });
 
 function generateTimeInfo() {
+
   const countDate = new Date("May 31, 2023 16:00:00").getTime();
   const now = new Date().getTime();
 
-  // Calculate remaining time
+  //calculate remaining time
   const remianingTime = countDate - now;
 
-  // Check if remaining time is negative
   if (remianingTime < 0) {
     return {
       remianingTime: 0,
@@ -22,17 +22,21 @@ function generateTimeInfo() {
     };
   }
 
-  // Calculate time in days, hours, minutes, and seconds
+  // workout the time in Days, hrs, min, sec
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
   const day = hour * 24;
 
-  const textDay = Math.floor(remianingTime / day);
-  const textHour = Math.floor((remianingTime % day) / hour);
-  const textMinute = Math.floor((remianingTime % hour) / minute);
-  const textSecond = Math.floor((remianingTime % minute) / second);
-
+  
+  const textDay = Math.floor(remianingTime / day)
+  const textHour = Math.floor((remianingTime % day) / hour)
+  const textMinute = Math.floor((remianingTime % hour) / minute)
+  const textSecond = Math.floor((remianingTime % minute) / second)
+  // const dateObj = new Date();
+  // const hrs = dateObj.getHours();
+  // const min = dateObj.getMinutes();
+  // const sec = dateObj.getSeconds();
   return {
     remianingTime,
     days: {
@@ -56,7 +60,7 @@ function generateTimeInfo() {
 
 $(document).ready(function () {
   $(".flip-clock").each(function (_, flipClock) {
-    // Generate handles for each flip element and its child elements
+    // generate handles for each flip element and its child elements
     const daysFirst = createHandles($(flipClock).find(".days-first"));
     const daysLast = createHandles($(flipClock).find(".days-last"));
     const hoursFirst = createHandles($(flipClock).find(".hours-first"));
@@ -65,29 +69,49 @@ $(document).ready(function () {
     const minutesLast = createHandles($(flipClock).find(".minutes-last"));
     const secondsFirst = createHandles($(flipClock).find(".seconds-first"));
     const secondsLast = createHandles($(flipClock).find(".seconds-last"));
-    const initialTime = generateTimeInfo();
-    setInitialValues(minutesFirst, initialTime.minutes.firstDigit);
-    setInitialValues(minutesLast, initialTime.minutes.lastDigit);
-    setInitialValues(secondsFirst, initialTime.seconds.firstDigit);
-    setInitialValues(secondsLast, initialTime.seconds.lastDigit);
-    setInitialValues(hoursFirst, initialTime.hours.firstDigit);
-    setInitialValues(hoursLast, initialTime.hours.lastDigit);
-    setInitialValues(daysFirst, initialTime.days.firstDigit);
-    setInitialValues(daysLast, initialTime.days.lastDigit);
+    const intialTime = generateTimeInfo();
+    setInitialValues(minutesFirst, intialTime.minutes.firstDigit);
+    setInitialValues(minutesLast, intialTime.minutes.lastDigit);
+    setInitialValues(secondsFirst, intialTime.seconds.firstDigit);
+    setInitialValues(secondsLast, intialTime.seconds.lastDigit);
+    setInitialValues(hoursFirst, intialTime.hours.firstDigit);
+    setInitialValues(hoursLast, intialTime.hours.lastDigit);
+    setInitialValues(daysFirst, intialTime.days.firstDigit);
+    setInitialValues(daysLast, intialTime.days.lastDigit);
 
     const time = generateTimeInfo();
-    updateTextLabels(time);
+    if (time.minutes.firstDigit == 0 && time.minutes.lastDigit  == 1 ){
+      document.querySelector(".minuteText").innerText = "Minute";
+    }
+    else {
+      document.querySelector(".minuteText").innerText = "Minutes";
+    }
+    
+    if (time.hours.firstDigit == 0 && time.hours.lastDigit  == 1 ){
+      document.querySelector(".hourText").innerText = "Hour";
+    }
+    else {
+      document.querySelector(".hourText").innerText = "Hours";
+    }
+    
+    if (time.days.firstDigit == 0 && time.days.lastDigit  == 1 ){
+      document.querySelector(".dayText").innerText = "Day";
+    }
+    else {
+      document.querySelector(".dayText").innerText = "Days";
+    }
 
     setInterval(() => {
       const time = generateTimeInfo();
-      if (time.remianingTime > 0) {
+      if (time.remianingTime > 0){
         flipDigit(secondsLast, time.seconds.lastDigit);
         flipDigit(secondsFirst, time.seconds.firstDigit);
         flipDigit(minutesLast, time.minutes.lastDigit);
         flipDigit(minutesFirst, time.minutes.firstDigit);
         flipDigit(hoursLast, time.hours.lastDigit);
         flipDigit(hoursFirst, time.hours.firstDigit);
-      } else {
+      }
+      else{
         setInitialValues(minutesFirst, "0");
         setInitialValues(minutesLast, "0");
         setInitialValues(secondsFirst, "0");
@@ -96,8 +120,7 @@ $(document).ready(function () {
         setInitialValues(hoursLast, "0");
         setInitialValues(daysFirst, "0");
         setInitialValues(daysLast, "0");
-      }
-    }, 1000);
+      }}, 1000); 
   });
 
   function setInitialValues(flipElement, initialValue) {
@@ -166,26 +189,27 @@ $(document).ready(function () {
       flipElement.removeClass("play");
     });
 
-    updateTextLabels(generateTimeInfo());
-  }
-
-  function updateTextLabels(time) {
-    if (time.minutes.firstDigit == 0 && time.minutes.lastDigit == 1) {
+    const time = generateTimeInfo();
+    if (time.minutes.firstDigit == 0 && time.minutes.lastDigit  == 1 ){
       document.querySelector(".minuteText").innerText = "Minute";
-    } else {
+    }
+    else {
       document.querySelector(".minuteText").innerText = "Minutes";
     }
-
-    if (time.hours.firstDigit == 0 && time.hours.lastDigit == 1) {
+    
+    if (time.hours.firstDigit == 0 && time.hours.lastDigit  == 1 ){
       document.querySelector(".hourText").innerText = "Hour";
-    } else {
+    }
+    else {
       document.querySelector(".hourText").innerText = "Hours";
     }
-
-    if (time.days.firstDigit == 0 && time.days.lastDigit == 1) {
+    
+    if (time.days.firstDigit == 0 && time.days.lastDigit  == 1 ){
       document.querySelector(".dayText").innerText = "Day";
-    } else {
+    }
+    else {
       document.querySelector(".dayText").innerText = "Days";
     }
+    
   }
 });
