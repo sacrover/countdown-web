@@ -1,6 +1,6 @@
 const checkbox = document.getElementById("darkmode-toggle");
 checkbox.addEventListener('change', () => {
-  // change theme here   
+  // Change theme here   
   document.body.classList.toggle("dark")
 });
 
@@ -65,34 +65,18 @@ $(document).ready(function () {
     const minutesLast = createHandles($(flipClock).find(".minutes-last"));
     const secondsFirst = createHandles($(flipClock).find(".seconds-first"));
     const secondsLast = createHandles($(flipClock).find(".seconds-last"));
-    const intialTime = generateTimeInfo();
-    setInitialValues(minutesFirst, intialTime.minutes.firstDigit);
-    setInitialValues(minutesLast, intialTime.minutes.lastDigit);
-    setInitialValues(secondsFirst, intialTime.seconds.firstDigit);
-    setInitialValues(secondsLast, intialTime.seconds.lastDigit);
-    setInitialValues(hoursFirst, intialTime.hours.firstDigit);
-    setInitialValues(hoursLast, intialTime.hours.lastDigit);
-    setInitialValues(daysFirst, intialTime.days.firstDigit);
-    setInitialValues(daysLast, intialTime.days.lastDigit);
+    const initialTime = generateTimeInfo();
+    setInitialValues(minutesFirst, initialTime.minutes.firstDigit);
+    setInitialValues(minutesLast, initialTime.minutes.lastDigit);
+    setInitialValues(secondsFirst, initialTime.seconds.firstDigit);
+    setInitialValues(secondsLast, initialTime.seconds.lastDigit);
+    setInitialValues(hoursFirst, initialTime.hours.firstDigit);
+    setInitialValues(hoursLast, initialTime.hours.lastDigit);
+    setInitialValues(daysFirst, initialTime.days.firstDigit);
+    setInitialValues(daysLast, initialTime.days.lastDigit);
 
     const time = generateTimeInfo();
-    if (time.minutes.firstDigit == 0 && time.minutes.lastDigit == 1) {
-      document.querySelector(".minuteText").innerText = "Minute";
-    } else {
-      document.querySelector(".minuteText").innerText = "Minutes";
-    }
-
-    if (time.hours.firstDigit == 0 && time.hours.lastDigit == 1) {
-      document.querySelector(".hourText").innerText = "Hour";
-    } else {
-      document.querySelector(".hourText").innerText = "Hours";
-    }
-
-    if (time.days.firstDigit == 0 && time.days.lastDigit == 1) {
-      document.querySelector(".dayText").innerText = "Day";
-    } else {
-      document.querySelector(".dayText").innerText = "Days";
-    }
+    updateTextLabels(time);
 
     setInterval(() => {
       const time = generateTimeInfo();
@@ -182,7 +166,10 @@ $(document).ready(function () {
       flipElement.removeClass("play");
     });
 
-    const time = generateTimeInfo();
+    updateTextLabels(generateTimeInfo());
+  }
+
+  function updateTextLabels(time) {
     if (time.minutes.firstDigit == 0 && time.minutes.lastDigit == 1) {
       document.querySelector(".minuteText").innerText = "Minute";
     } else {
@@ -200,97 +187,5 @@ $(document).ready(function () {
     } else {
       document.querySelector(".dayText").innerText = "Days";
     }
-  }
-});
-
-
-  function setInitialValues(flipElement, initialValue) {
-    const {
-      flipperTop,
-      flipperBottom,
-      flipperDisplayBottom,
-      flipperDisplayTop,
-      flipHiddenInput,
-    } = flipElement;
-    flipperTop.text(initialValue);
-    flipperBottom.text(initialValue);
-    flipperDisplayBottom.text(initialValue);
-    flipperDisplayTop.text(initialValue);
-    flipHiddenInput.val(initialValue);
-  }
-
-  function createHandles(flipElement) {
-    const flipperTop = flipElement.find(".flipper-top");
-    const flipperBottom = flipElement.find(".flipper-bottom");
-    const flipperDisplayTop = flipElement.find(".flip-display-top");
-    const flipperDisplayBottom = flipElement.find(".flip-display-bottom");
-    const flipHiddenInput = flipElement.find("[type='hidden']");
-    return {
-      flipElement,
-      flipperTop,
-      flipperBottom,
-      flipperDisplayBottom,
-      flipperDisplayTop,
-      flipHiddenInput,
-    };
-  }
-
-  function flipDigit(flipHandles, digitValue) {
-    const {
-      flipElement,
-      flipperTop,
-      flipperBottom,
-      flipperDisplayBottom,
-      flipperDisplayTop,
-      flipHiddenInput,
-    } = flipHandles;
-
-    const setPreviousValue = (value) => {
-      flipperTop.text(value);
-      flipperDisplayBottom.text(value);
-    };
-    const setAfterValue = (value) => {
-      flipperDisplayTop.text(value);
-      flipperBottom.text(value);
-    };
-
-    if (parseInt(flipHiddenInput.val()) !== digitValue) {
-      setPreviousValue(flipHiddenInput.val());
-      flipHiddenInput.val(digitValue).trigger("valueChanged");
-    }
-
-    flipHiddenInput.one("valueChanged", () => {
-      setAfterValue(flipHiddenInput.val());
-      flipElement.addClass("play");
-    });
-
-    flipperBottom.one("animationend", () => {
-      setAfterValue(flipHiddenInput.val());
-      setPreviousValue(flipHiddenInput.val());
-      flipElement.removeClass("play");
-    });
-
-    const time = generateTimeInfo();
-    if (time.minutes.firstDigit == 0 && time.minutes.lastDigit  == 1 ){
-      document.querySelector(".minuteText").innerText = "Minute";
-    }
-    else {
-      document.querySelector(".minuteText").innerText = "Minutes";
-    }
-    
-    if (time.hours.firstDigit == 0 && time.hours.lastDigit  == 1 ){
-      document.querySelector(".hourText").innerText = "Hour";
-    }
-    else {
-      document.querySelector(".hourText").innerText = "Hours";
-    }
-    
-    if (time.days.firstDigit == 0 && time.days.lastDigit  == 1 ){
-      document.querySelector(".dayText").innerText = "Day";
-    }
-    else {
-      document.querySelector(".dayText").innerText = "Days";
-    }
-    
   }
 });
